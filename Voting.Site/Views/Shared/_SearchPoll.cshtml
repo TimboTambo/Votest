@@ -1,0 +1,14 @@
+﻿<span>
+    Get poll
+    <input type="text" id="getPoll"/>
+    <button type="submit" id="submitGetPoll">Search</button>
+</span>
+
+<script type="text/javascript">
+    $(function () {
+        $("#submitGetPoll")
+            .click(function() {
+                window.location.href = '@Url.Action("FindPoll", "Poll")?searchTerm=' + $("#getPoll").val();
+            });
+    })
+</script>

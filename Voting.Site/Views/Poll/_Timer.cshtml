@@ -1,0 +1,107 @@
+﻿@model int
+
+<div>
+    Finishing in
+    <span id="expiration-timer">
+        <span id="timer-days"><span id="timer-days-num">0</span>:</span><span id="timer-hours"><span id="timer-hours-num">0</span>:</span><span id="timer-minutes"><span id="timer-minutes-num">0</span>:</span><span id="timer-seconds-num">00</span>
+    </span>
+</div>
+
+
+<script>
+    $(function () {
+        var $daysDisplay = $("#timer-days");
+        var $hoursDisplay = $("#timer-hours");
+        var $minutesDisplay = $("#timer-minutes");
+        var $days = $("#timer-days-num");
+        var $hours = $("#timer-hours-num");
+        var $minutes = $("#timer-minutes-num");
+        var $seconds = $("#timer-seconds-num");
+        var secondsRemaining = @Model;
+        var minutesRemaining = 0;
+        var hoursRemaining = 0;
+        var daysRemaining = 0;
+
+        if(secondsRemaining >= 60) {
+            minutesRemaining = Math.floor(secondsRemaining / 60);
+            secondsRemaining = secondsRemaining % 60;
+        }
+
+        if(minutesRemaining >= 60) {
+            hoursRemaining = Math.floor(minutesRemaining / 60);
+            minutesRemaining = minutesRemaining % 60;
+        }
+
+        if(hoursRemaining >= 24) {
+            daysRemaining = Math.floor(hoursRemaining / 60);
+            hoursRemaining = hoursRemaining % 60;
+        }
+
+        function toDoubleDigit(num) {
+            var numReturn = num.toString();
+            if(numReturn.length === 1) {
+                numReturn = "0" + numReturn;
+            }
+            return numReturn;
+        }
+
+        $seconds.html(toDoubleDigit(secondsRemaining));
+        $minutes.html(toDoubleDigit(minutesRemaining));
+        $hours.html(toDoubleDigit(hoursRemaining));
+        $days.html(daysRemaining);
+
+        if(daysRemaining === 0) {
+            $daysDisplay.hide();
+            if(hoursRemaining === 0) {
+                $hoursDisplay.hide();
+                if(minutesRemaining === 0) {
+                    $minutesDisplay.hide();
+                }
+            }
+        }
+
+        setInterval(function() {
+            var updateMinutes = false;
+            var updateHours = false;
+            var updateDays = false;
+
+            if(--secondsRemaining < 0) {
+                if(secondsRemaining + hoursRemaining + minutesRemaining + daysRemaining <= 0) {
+                    location.reload();
+                }
+                secondsRemaining = 59;
+                updateMinutes = true;
+                if(--minutesRemaining < 0) {
+                    minutesRemaining = 59;
+                    updateHours = true;
+                    if(--hoursRemaining < 0) {
+                        hoursRemaining = 23;
+                        updateDays = true;
+                        --daysRemaining;
+                    }
+                }
+            }
+            $seconds.html(toDoubleDigit(secondsRemaining));
+            if(updateMinutes) {
+                $minutes.html(toDoubleDigit(minutesRemaining));
+                if(minutesRemaining === 0) {
+                    $minutesDisplay.hide();
+                }
+            }
+            if(updateHours) {
+                $hours.html(toDoubleDigit(hoursRemaining));
+                if(hoursRemaining === 0) {
+                    $hoursDisplay.hide();
+                }
+            }
+            if(updateDays) {
+                $days.html(daysRemaining);
+                if(daysRemaining === 0) {
+                    $daysDisplay.hide();
+                }
+            }
+        },
+        1000);
+    });
+
+</script>

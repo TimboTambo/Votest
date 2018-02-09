@@ -1,0 +1,64 @@
+﻿@model Voting.Services.Models.WaitingOnPollModel
+<h2 class="mbm">@Model.PollName - @Model.LinkCode</h2>
+@if (!string.IsNullOrWhiteSpace(Model.Description))
+{
+    <div class="mbm fs18">
+        @Model.Description
+    </div>
+}
+
+<div class="fs18">
+    Created: @Model.DateCreated
+</div>
+<div class="mbm fs18">
+    This poll is waiting to be started
+</div>
+
+@if (Model.UserIsCreator)
+{
+    using (Html.BeginForm("Start", "Poll", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+    {
+        @Html.HiddenFor(m => m.PollId);
+        <input type="submit" value="Start" class="pls prs fs18"/>
+    }
+    var questionIndex = 1;
+    foreach (var question in Model.Questions)
+    {
+        var optionIndex = 1;
+        <div data-questionid="@question.QuestionId" class="mtm question fs18 pm">
+            <div>
+                <span class="t-b">Question @(questionIndex):</span> @question.QuestionText
+            </div>
+            <div class="options mlm mtm">
+                @foreach (var option in @question.Options)
+                {
+                    <div data-optionid="@option.OptionId" class="mbs">
+                        <div>
+                            <span>
+                                @(questionIndex).@(optionIndex))
+                            </span>
+                            <span class="mls">
+                                @option.OptionText
+                            </span>
+                        </div>
+                    </div>
+                    optionIndex++;
+                }
+            </div>
+        </div>
+        questionIndex++;
+    }
+
+    <script>
+    $(function() {
+        var pollHub = $.connection.pollHub;
+        var pollId = @Model.PollId;
+        pollHub.client.pollStarted = function (startedPollId) {
+            if(startedPollId === pollId) {
+                location.reload();
+            }
+        };
+        $.connection.hub.start();
+    });
+    </script>
+}

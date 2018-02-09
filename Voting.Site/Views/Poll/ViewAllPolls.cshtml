@@ -1,0 +1,43 @@
+﻿@using System.Web.Mvc.Html
+@model List<Voting.Services.Models.Poll>
+
+<h2 class="mbl">Your polls</h2>
+<hr />
+@foreach (var poll in Model)
+{
+    <div class="mbs mts poll pm">
+        <div class="fs18 mbs">
+            @poll.PollName - @poll.LinkCode
+        </div>
+        <div class="fs18">
+            Status:
+            @if (poll.IsNotStarted)
+            {
+                <span>Waiting to be started</span>
+            }
+            else if (poll.IsExpired)
+            {
+                <span>Closed</span>
+            }
+            else
+            {
+                <span>Active</span>
+            }
+        </div>
+        <div class="mbs fs18">
+            Responses: @poll.Responses
+        </div>
+        <div class="fs18">
+            @Html.ActionLink("View", "ViewPoll", "Poll", new {pollId = poll.PollId}, null)
+        </div>
+    </div>
+}
+@if (Model.Count == 0)
+{
+    <div class="fs18">
+        You currently don't have any polls.
+    </div>
+}
+<div class="fs18 btn mtl">
+    <i class="fa fa-plus mrs"></i> @Html.ActionLink("Create a new poll", "Create", "Poll", new { area = "" }, new { @class = "no-style" })
+</div>

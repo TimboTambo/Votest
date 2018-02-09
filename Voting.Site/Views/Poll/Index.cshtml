@@ -1,0 +1,21 @@
+﻿<div class="mtxl mbxl ptxl pbxl">
+    <div style="text-align: center" class="mtxl mbxl ptxl pbxl">
+        <div class="err-text mts mbs">
+            @if (!string.IsNullOrWhiteSpace(ViewBag.ErrorMessage))
+            {
+                <span>Error: @ViewBag.ErrorMessage</span>
+            }    
+        </div>
+        <input type="text" id="get-poll" class="big-input ps" placeholder="Enter vote code"/>
+        <button type="submit" id="submit-get-poll" class="mlm pl">Go!</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#submit-get-poll")
+            .click(function() {
+                window.location.href = '@Url.Action("FindPoll", "Poll")?searchTerm=' + $("#get-poll").val();
+            });
+    })
+</script>

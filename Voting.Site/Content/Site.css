@@ -1,0 +1,136 @@
+﻿body {
+    background: #c1f6ff;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.big-input { 
+    width: 50%; 
+    height: 65px; 
+    font-size: 28px;
+    border-radius: 5px;
+}
+a.no-style { color: inherit; text-decoration: none; }
+.header-logo { font-size: 40px; color: #ddd; }
+#submit-get-poll { font-size: 24px; border-radius: 5px;}
+.question, .poll{ box-shadow: 0px 0px 4px #303030; border-radius: 5px}
+.err-text { color: #bb0000;}
+.question-input input { width: 300px; padding: 4px;}
+.form-field input { width: 300px; padding: 4px; }
+.option-input input { width: 300px; padding: 4px;}
+.duration input { width: 100px; text-align: right; padding: 4px;}
+.btn {  
+    border-color: rgb(68, 122, 131);
+}
+.action-btn, .action-btn:hover { 
+    max-width: 280px;
+    align-items: flex-start;
+    text-align:center;
+    color: ButtonText;
+    background-color: buttonface;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+    user-select: none;
+    white-space: pre;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    font-family: Arial;
+    -webkit-writing-mode: horizontal-tb;
+    cursor: pointer;
+    -webkit-appearance: button;
+    text-decoration: none;
+}
+.remove-option { float: none; }
+.t-b { font-weight: bold; }
+.t-n { font-weight: normal; }
+.fs12 { font-size: 12px;}
+.fs14 { font-size: 14px;}
+.fs16 { font-size: 16px;}
+.fs18 { font-size: 18px;}
+.fs20 { font-size: 20px;}
+.fs22 { font-size: 22px;}
+.fs24 { font-size: 24px;}
+.fs26 { font-size: 26px;}
+.fs28 { font-size: 28px;}
+.fs30 { font-size: 30px;}
+.fs40 { font-size: 40px;}
+
+.mtxl { margin-top: 20px }
+.mtl { margin-top: 16px }
+.mtm { margin-top: 12px }
+.mts { margin-top: 8px }
+.mtxs { margin-top: 4px }
+.mlxl { margin-left: 20px }
+.mll { margin-left: 16px }
+.mlm { margin-left: 12px }
+.mls { margin-left: 8px }
+.mlxs { margin-left: 4px }
+.mrxl { margin-right: 20px }
+.mrl { margin-right: 16px }
+.mrm { margin-right: 12px }
+.mrs { margin-right: 8px }
+.mrxs { margin-right: 4px }
+.mbxl { margin-bottom: 20px }
+.mbl { margin-bottom: 16px }
+.mbm { margin-bottom: 12px }
+.mbs { margin-bottom: 8px }
+.mbxs { margin-bottom: 4px }
+.mxl { margin: 20px }
+.ml { margin: 16px }
+.mm { margin: 12px }
+.ms { margin: 8px }
+.mxs { margin: 4px }
+.ptxl { padding-top: 20px }
+.ptl { padding-top: 16px }
+.ptm { padding-top: 12px }
+.pts { padding-top: 8px }
+.ptxs { padding-top: 4px }
+.plxl { padding-left: 20px }
+.pll { padding-left: 16px }
+.plm { padding-left: 12px }
+.pls { padding-left: 8px }
+.plxs { padding-left: 4px }
+.pbxl { padding-bottom: 20px }
+.pbl { padding-bottom: 16px }
+.pbm { padding-bottom: 12px }
+.pbs { padding-bottom: 8px }
+.pbxs { padding-bottom: 4px }
+.prxl { padding-right: 20px }
+.prl { padding-right: 16px }
+.prm { padding-right: 12px }
+.prs { padding-right: 8px }
+.prxs { padding-right: 4px }
+.pxl { padding: 20px }
+.pl { padding: 16px }
+.pm { padding: 12px }
+.ps { padding: 8px }
+.pxs { padding: 4px }
+.txtc { text-align: center;}
+.cGry2 { color: #ccc;}
+#footer { position: relative; bottom: 0; padding-top: 30px}
+hr { border-top: 1px solid #656565}

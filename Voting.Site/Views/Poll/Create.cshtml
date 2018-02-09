@@ -1,0 +1,75 @@
+﻿@model Voting.Services.Models.CreatePollModel
+<h2 class="mbm">Create a poll</h2>
+<hr />
+
+@using (Html.BeginForm("Create", "Poll", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="mbm">
+        <div class="mbxs fs18">
+            Poll name
+        </div>
+        <div class="form-field">
+            @Html.TextBoxFor(m => m.PollName)
+        </div>
+    </div>
+    <div class="mbl">
+        <div class="mbxs fs18">
+            Description
+        </div>
+        <div class="form-field">
+            @Html.TextBoxFor(m => m.Description)
+        </div>
+    </div>
+    <div id="questions" class="mbs">
+        @foreach (var question in Model.Questions)
+        {
+            @Html.Partial("_NewQuestion", question)
+        }
+    </div>
+    <div class="add-question mbxl mtm btn fs18">
+        <i class="fa fa-plus mrxs"></i>Add question
+    </div>
+    <div class="mbl">
+        <div class="mbxs fs18">
+            Duration (minutes)
+        </div>
+        <div class="duration">
+            @Html.TextBoxFor(m => m.DurationMinutes)
+        </div>
+    </div>
+    <div class="fs18 mtxl">
+        @Html.ActionLink("Cancel", "ViewAllPolls", "Poll", new { @class = "action-btn ps" })
+        <input type="submit" value="Create" class="ps"/>
+    </div>
+}
+
+<script>
+    window.onload = function () {
+        $(".add-question").on("click", function () {
+            $.ajax({
+                async: true,
+                url: '@Url.Action("AddQuestion", "Poll")'
+            }).success(function (partialView) {
+                $("#questions").append(partialView);
+            });
+        });
+
+        $("body").on("click", ".add-option", function () {
+            $this = $(this);
+            $.ajax({
+                async: true,
+                url: '@Url.Action("AddOption", "Poll")',
+                data: {"containerPrefix" : $(this).data("prefix")}
+            }).success(function (partialView) {
+                $this.prev().append(partialView);
+            });
+        });
+
+        $("body").on("click", ".remove-option", function () {
+            $(this).closest(".option").remove();
+        });
+        $("body").on("click", ".remove-question", function () {
+            $(this).closest(".question").remove();
+        });
+    };
+</script>

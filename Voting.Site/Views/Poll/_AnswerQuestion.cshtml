@@ -1,0 +1,28 @@
+﻿@model Voting.Services.Models.CompletePollQuestion
+
+@using (Html.BeginCollectionItem("Questions"))
+{
+    @Html.HiddenFor(m => m.QuestionId)
+    @Html.HiddenFor(m => m.PollId)
+    @Html.HiddenFor(m => m.QuestionType)
+    var optionIndex = 1;
+    <div class="mtm pm question fs18">
+        <div>
+            <span class="t-b">Question @(Model.QuestionIndex):</span> @Model.QuestionText
+        </div>
+        <div class="options mlm mtm">
+            @for (var i = 0; i < Model.Options.Count(); i++)
+            {
+                var option = Model.Options.ElementAt(i);
+                <div class="mbs">
+                    <span class="mrm">
+                        @(Model.QuestionIndex).@(optionIndex))
+                    </span> 
+                    @Html.RadioButtonFor(m => m.ResponseId, option.OptionId)
+                    <span class="mls">@option.OptionText</span>
+                </div>
+                optionIndex++;
+            }
+        </div>
+    </div>
+ }

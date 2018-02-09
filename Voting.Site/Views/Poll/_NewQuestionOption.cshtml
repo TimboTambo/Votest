@@ -1,0 +1,17 @@
+﻿@using Voting.Services.Models
+@model NewQuestionOption
+@{
+    var htmlPrefix = !string.IsNullOrWhiteSpace(ViewData.TemplateInfo.HtmlFieldPrefix) ? ViewData.TemplateInfo.HtmlFieldPrefix : ViewData["HtmlFieldPrefix"];
+}
+
+@using (Html.BeginCollectionItem(htmlPrefix + ".Options"))
+{
+    <div class="option mbs">
+        <div class="mbxs fs18">
+            Option
+        </div>
+        <div class="option-input">
+            @Html.EditorFor(m => m.OptionText) <i class="fa fa-close mlxs remove-option close"></i>
+        </div>
+    </div>
+}

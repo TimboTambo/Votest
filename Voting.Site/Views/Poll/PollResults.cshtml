@@ -1,0 +1,96 @@
+﻿@model Voting.Services.Models.PollResultsModel
+@{
+    var secondsRemaining = (int)Math.Floor(Model.FinishDate.Subtract(DateTime.UtcNow).TotalSeconds);
+    var questionIndex = 1;
+}
+<h2>@Model.PollName - @Model.LinkCode</h2>
+@if (!string.IsNullOrWhiteSpace(Model.Description))
+{
+    <div class="mbxl fs18">
+        @Model.Description
+    </div>
+}
+
+<div class="mbm fs22">
+    Results
+</div>
+<div class="fs18">
+    @if (secondsRemaining > 0)
+    {
+        @(Html.Partial("_Timer", secondsRemaining))
+    }
+    else
+    {
+        <div>
+            Finished at @Model.FinishDate
+        </div>
+    }
+</div>
+<div class="fs18">
+    Total responses: <span id="total-responses">@Model.NumberOfResponses</span>
+</div>
+
+@foreach (var question in Model.Questions)
+{
+    var optionIndex = 1;
+    <div data-questionid="@question.QuestionId" class="mtm question fs18 pm">
+        <div>
+            <span class="t-b">Question @(questionIndex):</span> @question.QuestionText
+        </div>
+        <div class="options mlm mtm">
+            @foreach (var option in @question.Options)
+            {
+                <div data-optionid="@option.OptionId" class="mbs">
+                    <div>
+                        <span>
+                            @(questionIndex).@(optionIndex))
+                        </span> 
+                        <span class="mls">
+                            @option.OptionText -
+                        </span>
+                        <span class="votes mlm">
+                        @option.Votes
+                        </span> votes
+                    </div>
+                </div>
+                optionIndex++;
+            }
+        </div>
+    </div>
+    questionIndex++;
+}
+
+<script>
+    $(function () {
+        var pollId = @Model.PollId;
+        var $totalResponses = $("#total-responses");
+        var pollHub = $.connection.pollHub;
+        function init() {
+            pollHub.server.joinPollGroup(pollId);
+        }
+        pollHub.client.updateVotes = function(pollUpdate) {
+            if(pollUpdate.PollId !== pollId) {
+                return;
+            }
+            var totalResponses = parseInt($totalResponses.html());
+            if(!isNaN(totalResponses)) {
+                $totalResponses.html(++totalResponses);
+            }
+            for(var i = 0; i < pollUpdate.QuestionUpdates.length; i++) {
+                var questionId = pollUpdate.QuestionUpdates[i].QuestionId;
+                var optionId = pollUpdate.QuestionUpdates[i].OptionId;
+                var currentVotesSpan = $('div[data-questionid=' +
+                    questionId +
+                    '] div[data-optionid=' +
+                    optionId +
+                    '] span.votes');
+                var currentVotes = parseInt(currentVotesSpan.html());
+                if(isNaN(currentVotes)) {
+                    return;
+                }
+                currentVotesSpan.html(++currentVotes);
+            }
+        };
+        $.connection.hub.start().done(init);
+    });
+</script>

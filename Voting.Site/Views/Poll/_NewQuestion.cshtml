@@ -1,0 +1,26 @@
+﻿@using Voting.Services.Models
+@model NewQuestion
+
+@using (Html.BeginCollectionItem("Questions"))
+{
+    <div class="question pm mbm">
+        <i class="fa fa-close close remove-question"></i>
+        <div class="mbm">
+            <div class="mbxs fs18">
+                Question
+            </div>
+            <div class="question-input">
+                @Html.EditorFor(m => m.QuestionText, new {@class = "long-input"})
+            </div>
+        </div>
+        <div class="options">
+            @foreach (var option in Model.Options)
+            {
+                @Html.Partial("_NewQuestionOption", option)
+            }
+        </div>
+        <div class="add-option mtm mbs btn fs18" data-prefix="@ViewData.TemplateInfo.HtmlFieldPrefix">
+            <i class="fa fa-plus mrxs"></i>Add option
+        </div>
+    </div>
+}

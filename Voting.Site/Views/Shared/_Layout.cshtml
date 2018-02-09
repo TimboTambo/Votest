@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="navbar navbar-inverse">
+        <div class="row">
+            <div class="navbar-header col-md-3">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    @Html.ActionLink("Manage polls", "ViewAllPolls", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+                }                
+                @Html.ActionLink("Create new poll", "Create", "Poll", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="col-md-6 txtc">
+                <div class="header-logo mts mbs">
+                    <a href="/" class="no-style">
+                        Votest
+                    </a>
+                    <div class="fs20 cGry2">Get consensus fast</div>
+                </div>    
+            </div>
+            <div class="col-md-3">
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content ptxl">
+        @RenderBody()
+    </div>
+    <div id="footer" class="plm prm">
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Tim Lee</p>
+        </footer>
+    </div>
+</body>
+</html>

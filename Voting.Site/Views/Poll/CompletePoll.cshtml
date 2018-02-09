@@ -1,0 +1,29 @@
+﻿@model Voting.Services.Models.CompletePollModel
+@{
+    var secondsRemaining = (int)Math.Floor(Model.FinishDate.Subtract(DateTime.UtcNow).TotalSeconds);
+}
+@using (Html.BeginForm("CompletePoll", "Poll", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <h2>@Model.PollName - @Model.LinkCode</h2>
+    if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <div class="mbm">
+            @Model.Description
+        </div>
+    }
+    <div class="mtm mbm">
+        @(Html.Partial("_Timer", secondsRemaining))
+    </div>
+    @Html.HiddenFor(m => m.PollId)
+
+    var questionIndex = 1;
+    foreach (var question in Model.Questions)
+    {
+        question.QuestionIndex = questionIndex;
+        @Html.Partial("_AnswerQuestion", question)
+        questionIndex++;
+    }
+    <div class="mtxl mlm">
+        <button type="submit" class="plm prm ptxs pbxs">Submit</button>
+    </div>
+}
