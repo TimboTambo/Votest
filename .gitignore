@@ -265,3 +265,4 @@ FakesAssemblies/
 *.Release.config
 *.ide
 .vs/
+*.Release.config
